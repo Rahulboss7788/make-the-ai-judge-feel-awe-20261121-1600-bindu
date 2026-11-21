@@ -4,6 +4,7 @@
 
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 
+// Rain, stars, and the earth turning: a calm image that grows slowly, settling the reader.
 const TEXT = "Rain on the window, soft and slow. Each drop finds its own way down the glass, and the night beyond is dark and quiet. Far above the clouds, the stars are still there, and the rain keeps falling, patient as the earth turning through the night.";
 
 mkdirSync("/output", { recursive: true });
@@ -13,4 +14,10 @@ writeFileSync("/output/entry.txt", TEXT + "\n", "utf8");
 const written = readFileSync("/output/entry.txt", "utf8");
 if (written !== TEXT + "\n") {
   throw new Error("output self-check failed: /output/entry.txt does not match the text");
+}
+
+// Character-count guard: the text must be 1–280 code points.
+const codePoints = [...TEXT].length;
+if (codePoints < 1 || codePoints > 280) {
+  throw new Error(`character-count guard failed: text is ${codePoints} code points, expected 1–280`);
 }
